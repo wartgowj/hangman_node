@@ -23,6 +23,7 @@ inquirer.prompt([
 ]).then(function(response){
     if(response.wannaPlay){
         newWord.printLetters();
+        console.log("");
         startGame();
     }else{
         console.log("-----------------------------");
@@ -41,6 +42,7 @@ function playAgain(){
         }
     ]).then(function (response) {
         if (response.wannaPlay) {
+            console.log("");
             newWord.printLetters();
             startGame();
         } else {
@@ -59,13 +61,23 @@ function promptUser(){
         message: "Guess a letter"
         }
     ]).then(function(user){
+        if(userGuess.indexOf(user.letGuessed) > -1){
+            console.log("You already guessed " + user.letGuessed);
+            console.log("-----------------------------------------")
+            console.log("Your guesses so far: " + userGuess);
+            console.log("");
+            checkAllLetters();
+            promptUser();
+        }else{
         userGuess.push(user.letGuessed.toLowerCase());
         console.log("-----------------------------------------")
         console.log("Your guesses so far: " + userGuess);
+        console.log("");
         checkAllLetters();
         if (newWord.countLettersFound() === currentWord.length){
             console.log("You Win!!")
             console.log("The secret word was: " + currentWord.toUpperCase());
+            console.log("");
             playAgain();
             resetGame();
         }else if(currentWordArr.indexOf(user.letGuessed) === -1){
@@ -76,12 +88,14 @@ function promptUser(){
                 }else{
                     console.log("Sorry, but you are out of guesses");
                     console.log("The secret word was: " + currentWord.toUpperCase());
+                    console.log("");
                     playAgain();
                     resetGame();
                 }  
         }else{
             console.log("You have " + guessesLeft + " guesses remaining");
             promptUser();
+            }
         }
     })
 }
