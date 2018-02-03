@@ -15,24 +15,24 @@ newWord.getLetters();
 
 inquirer.prompt([
 
-  {
-      type: "confirm",
-      name: "wannaPlay",
-      message: "Do you want to play a game?"
-  }  
-]).then(function(response){
-    if(response.wannaPlay){
+    {
+        type: "confirm",
+        name: "wannaPlay",
+        message: "Do you want to play a game?"
+    }
+]).then(function (response) {
+    if (response.wannaPlay) {
         newWord.printLetters();
         console.log("");
         startGame();
-    }else{
+    } else {
         console.log("-----------------------------");
         console.log("Fine, come back when you do!!");
         console.log("-----------------------------");
         return;
     }
 });
-function playAgain(){
+function playAgain() {
     inquirer.prompt([
 
         {
@@ -53,66 +53,66 @@ function playAgain(){
         }
     });
 }
-function promptUser(){
+function promptUser() {
     inquirer.prompt([
         {
-        type: "input",
-        name: "letGuessed",
-        message: "Guess a letter"
+            type: "input",
+            name: "letGuessed",
+            message: "Guess a letter"
         }
-    ]).then(function(user){
-        if(userGuess.indexOf(user.letGuessed) > -1){
+    ]).then(function (user) {
+        if (userGuess.indexOf(user.letGuessed) > -1) {
             console.log("You already guessed " + user.letGuessed);
             console.log("-----------------------------------------")
             console.log("Your guesses so far: " + userGuess);
             console.log("");
             checkAllLetters();
             promptUser();
-        }else{
-        userGuess.push(user.letGuessed.toLowerCase());
-        console.log("-----------------------------------------")
-        console.log("Your guesses so far: " + userGuess);
-        console.log("");
-        checkAllLetters();
-        if (newWord.countLettersFound() === currentWord.length){
-            console.log("You Win!!")
-            console.log("The secret word was: " + currentWord.toUpperCase());
+        } else {
+            userGuess.push(user.letGuessed.toLowerCase());
+            console.log("-----------------------------------------")
+            console.log("Your guesses so far: " + userGuess);
             console.log("");
-            playAgain();
-            resetGame();
-        }else if(currentWordArr.indexOf(user.letGuessed) === -1){
-            guessesLeft--;
-            console.log("You have " + guessesLeft + " guesses remaining");
-                if(guessesLeft > 0){
+            checkAllLetters();
+            if (newWord.countLettersFound() === currentWord.length) {
+                console.log("You Win!!")
+                console.log("The secret word was: " + currentWord.toUpperCase());
+                console.log("");
+                playAgain();
+                resetGame();
+            } else if (currentWordArr.indexOf(user.letGuessed) === -1) {
+                guessesLeft--;
+                console.log("You have " + guessesLeft + " guesses remaining");
+                if (guessesLeft > 0) {
                     promptUser();
-                }else{
+                } else {
                     console.log("Sorry, but you are out of guesses");
                     console.log("The secret word was: " + currentWord.toUpperCase());
                     console.log("");
                     playAgain();
                     resetGame();
-                }  
-        }else{
-            console.log("You have " + guessesLeft + " guesses remaining");
-            promptUser();
+                }
+            } else {
+                console.log("You have " + guessesLeft + " guesses remaining");
+                promptUser();
             }
         }
     })
 }
 
-function checkAllLetters(){
-for(var i=0;i<userGuess.length;i++){
-    newWord.compareLetter(userGuess[i]);
+function checkAllLetters() {
+    for (var i = 0; i < userGuess.length; i++) {
+        newWord.compareLetter(userGuess[i]);
     }
     newWord.printLetters();
 }
 
 
-function startGame(){
+function startGame() {
     promptUser();
 }
 
-function resetGame(){
+function resetGame() {
     currentWordTemp = faker.random.word();
     currentWord = currentWordTemp.toLowerCase();
     currentWordArr = currentWord.split("");
