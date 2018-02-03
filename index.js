@@ -12,7 +12,7 @@ var userGuess = [];
 var guessesLeft = 10;
 
 newWord.getLetters();
-
+console.log("");
 inquirer.prompt([
 
     {
@@ -22,13 +22,16 @@ inquirer.prompt([
     }
 ]).then(function (response) {
     if (response.wannaPlay) {
+        console.log("");
         newWord.printLetters();
         console.log("");
         startGame();
     } else {
+        console.log("");
         console.log("-----------------------------");
         console.log("Fine, come back when you do!!");
         console.log("-----------------------------");
+        console.log("");
         return;
     }
 });
@@ -44,11 +47,14 @@ function playAgain() {
         if (response.wannaPlay) {
             console.log("");
             newWord.printLetters();
+            console.log("");
             startGame();
         } else {
+            console.log("");
             console.log("-----------------------------");
             console.log("Fine, come back when you do!!");
             console.log("-----------------------------");
+            console.log("");
             return;
         }
     });
@@ -82,6 +88,7 @@ function promptUser() {
                 resetGame();
             } else if (currentWordArr.indexOf(user.letGuessed) === -1) {
                 guessesLeft--;
+                console.log("");
                 console.log("You have " + guessesLeft + " guesses remaining");
                 if (guessesLeft > 0) {
                     promptUser();
@@ -93,6 +100,7 @@ function promptUser() {
                     resetGame();
                 }
             } else {
+                console.log("");
                 console.log("You have " + guessesLeft + " guesses remaining");
                 promptUser();
             }
