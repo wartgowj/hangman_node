@@ -15,5 +15,8 @@
   "bugs": {
     "url": "https://github.com/wartgowj/hangman_node/issues"
   },
-  "homepage": "https://github.com/wartgowj/hangman_node#readme"
+  "homepage": "https://github.com/wartgowj/hangman_node#readme",
+  "dependencies": {
+    "inquirer": "^5.0.1"
+  }
 }
