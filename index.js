@@ -3,6 +3,7 @@ const letter = require('./letter.js')
 const word = require('./word.js')
 
 var currentWord = "testing";
+var currentWordArr = currentWord.split("");
 
 var newWord = new word(currentWord);
 var wordArr = [];
@@ -34,15 +35,29 @@ function promptUser(){
         {
         type: "input",
         name: "letGuessed",
-        message: "Pick a letter to guess"
+        message: "Guess a letter"
         }
     ]).then(function(user){
-        userGuess.push(user.letGuessed);
+        userGuess.push(user.letGuessed.toLowerCase());
+        console.log("-----------------------------------------")
+        console.log("Your guesses so far: " + userGuess);
         checkAllLetters();
         if (newWord.countLettersFound() === currentWord.length){
             console.log("You Win!!")
+            console.log("The secret word was: " + currentWord.toUpperCase());
+        }else if(currentWordArr.indexOf(user.letGuessed) === -1){
+            guessesLeft--;
+            console.log("You have " + guessesLeft + " guesses remaining");
+                if(guessesLeft > 0){
+                    promptUser();
+                }else{
+                    console.log("Sorry, but you are out of guesses");
+                    console.log("The secret word was: " + currentWord.toUpperCase());
+                    return;
+                }  
         }else{
-        promptUser();
+            console.log("You have " + guessesLeft + " guesses remaining");
+            promptUser();
         }
     })
 }
