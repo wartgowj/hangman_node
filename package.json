@@ -17,6 +17,7 @@
   },
   "homepage": "https://github.com/wartgowj/hangman_node#readme",
   "dependencies": {
+    "faker": "^4.1.0",
     "inquirer": "^5.0.1"
   }
 }

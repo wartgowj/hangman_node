@@ -3,11 +3,17 @@ var Letter = function(letter){
     this.appear = false;
 
     this.showLetter = function() {
-        if(this.appear === false){
-            return '_';
-        }else{
-            return this.letter;
-        }
+      if (this.letter === "-"){
+          this.appear = true;
+          return this.letter;
+      }else if(this.letter === " "){
+          this.appear = true;
+          return this.letter;  
+      }else if(this.appear === false){
+          return '_';
+      }else{
+          return this.letter;
+      }
     }
 }
 

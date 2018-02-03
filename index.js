@@ -1,10 +1,11 @@
 const inquirer = require('inquirer');
 const letter = require('./letter.js')
 const word = require('./word.js')
+const faker = require('faker');
 
-var currentWord = "testing";
+var currentWordTemp = faker.random.word();
+var currentWord = currentWordTemp.toLowerCase();
 var currentWordArr = currentWord.split("");
-
 var newWord = new word(currentWord);
 var wordArr = [];
 var userGuess = [];
@@ -21,6 +22,7 @@ inquirer.prompt([
   }  
 ]).then(function(response){
     if(response.wannaPlay){
+        newWord.printLetters();
         startGame();
     }else{
         console.log("-----------------------------");
@@ -29,7 +31,26 @@ inquirer.prompt([
         return;
     }
 });
+function playAgain(){
+    inquirer.prompt([
 
+        {
+            type: "confirm",
+            name: "wannaPlay",
+            message: "Do you want to play another game?"
+        }
+    ]).then(function (response) {
+        if (response.wannaPlay) {
+            newWord.printLetters();
+            startGame();
+        } else {
+            console.log("-----------------------------");
+            console.log("Fine, come back when you do!!");
+            console.log("-----------------------------");
+            return;
+        }
+    });
+}
 function promptUser(){
     inquirer.prompt([
         {
@@ -45,6 +66,8 @@ function promptUser(){
         if (newWord.countLettersFound() === currentWord.length){
             console.log("You Win!!")
             console.log("The secret word was: " + currentWord.toUpperCase());
+            playAgain();
+            resetGame();
         }else if(currentWordArr.indexOf(user.letGuessed) === -1){
             guessesLeft--;
             console.log("You have " + guessesLeft + " guesses remaining");
@@ -53,7 +76,8 @@ function promptUser(){
                 }else{
                     console.log("Sorry, but you are out of guesses");
                     console.log("The secret word was: " + currentWord.toUpperCase());
-                    return;
+                    playAgain();
+                    resetGame();
                 }  
         }else{
             console.log("You have " + guessesLeft + " guesses remaining");
@@ -72,4 +96,15 @@ for(var i=0;i<userGuess.length;i++){
 
 function startGame(){
     promptUser();
+}
+
+function resetGame(){
+    currentWordTemp = faker.random.word();
+    currentWord = currentWordTemp.toLowerCase();
+    currentWordArr = currentWord.split("");
+    newWord = new word(currentWord);
+    wordArr = [];
+    userGuess = [];
+    guessesLeft = 10;
+    newWord.getLetters();
 }
